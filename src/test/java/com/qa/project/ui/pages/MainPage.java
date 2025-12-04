@@ -1,7 +1,8 @@
-package com.qa.project.pages;
+package com.qa.project.ui.pages;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import com.qa.project.common.config.Properties;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -11,7 +12,6 @@ import static com.codeborne.selenide.Selenide.*;
  */
 public class MainPage {
 
-    private static final String URL = "https://demoqa.com/";
 
     private final SelenideElement bookStoreApplicationButton = $(By.xpath("//div[h5[text()='Book Store Application']]"));
     private final SelenideElement elementsButton = $(By.xpath("//div[h5[contains(text(), 'Elements')]]"));
@@ -26,7 +26,7 @@ public class MainPage {
     }
 
     public static MainPage openMainPage() {
-        Selenide.open(URL);
+        Selenide.open(Properties.BASE_URL);
         return new MainPage();
     }
 

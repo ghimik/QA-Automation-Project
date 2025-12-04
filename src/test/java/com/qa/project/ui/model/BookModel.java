@@ -1,4 +1,4 @@
-package com.qa.project.model;
+package com.qa.project.ui.model;
 
 import lombok.Value;
 
