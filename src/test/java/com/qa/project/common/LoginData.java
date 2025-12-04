@@ -1,9 +1,9 @@
-package com.qa.project.ui.model;
+package com.qa.project.common;
 
 import lombok.Value;
 
 @Value
-public class LoginFormData {
+public class LoginData {
     String username;
     String password;
 }

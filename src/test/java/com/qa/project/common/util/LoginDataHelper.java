@@ -1,7 +1,7 @@
 package com.qa.project.common.util;
 
 import com.qa.project.common.config.Properties;
-import com.qa.project.ui.model.LoginFormData;
+import com.qa.project.common.LoginData;
 
 public final class LoginDataHelper {
 
@@ -9,8 +9,8 @@ public final class LoginDataHelper {
         throw new IllegalStateException("Utility class");
     }
 
-    public static LoginFormData demoUserLoginDataFromProperties() {
-        return new LoginFormData(
+    public static LoginData demoUserLoginDataFromProperties() {
+        return new LoginData(
                 Properties.TEST_USER_USERNAME,
                 Properties.TEST_USER_PASSWORD
         );

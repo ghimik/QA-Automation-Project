@@ -31,3 +31,6 @@ build/
 
 target
 target/
+
+src/test/resources/secret/
+src/test/resources/secret
