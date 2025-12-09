@@ -12,6 +12,7 @@ public abstract class BaseSelenideTest {
     public static void setUp() {
         WebDriverManager.safaridriver().setup();
         Configuration.browser = "safari";
+        Configuration.baseUrl = "https://demoqa.com";
         Configuration.browserSize = "2880x1800";
         Configuration.headless = false;
     }

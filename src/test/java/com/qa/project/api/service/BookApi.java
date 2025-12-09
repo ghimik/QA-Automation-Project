@@ -25,11 +25,12 @@ public final class BookApi {
     }
 
     public static Optional<Book> getBookByISBN(String isbn) {
-        Response response = given()
+        final Response response = given()
                             .spec(defaultRequestSpecification())
                             .param("ISBN", isbn)
                         .when()
                             .get("BookStore/v1/Books/");
+
 
         return switch (response.getStatusCode()) {
             case 200 -> Optional.ofNullable(response.getBody().as(Book.class));
