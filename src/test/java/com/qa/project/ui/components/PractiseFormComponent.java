@@ -9,18 +9,19 @@ import com.qa.project.ui.model.UserFormModel.Gender;
 import com.qa.project.ui.model.UserFormModel.Hobby;
 import com.qa.project.ui.model.UserFormModel.States;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 
 import java.io.File;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.*;
 
 public class PractiseFormComponent {
 
@@ -70,10 +71,39 @@ public class PractiseFormComponent {
         return this;
     }
 
+    /*
+     * этот Datepicker - настоящий памятник фронтенд-инженерии.
+     * 1. clear() не работает - игнорирует вызов.
+     * 2. setValue() поверх существующего значения?
+     *    он просто дописывает новое к старому, получая абракадабру типа "09 Dec 202409 Dec 2025".
+     * 3. executeJavaScript()? увы, React никаким образом не реагирует.
+     * 4. попытка стереть вручную - страница реагирует как на покушение на мировую безопасность.
+     *
+     * стандартные методы Selenide здесь бессильны.
+     * вот единственный рабочий способ - через интерфейс календаря
+     */
+
     public PractiseFormComponent setDateOfBirth(LocalDate date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy").localizedBy(Locale.ENGLISH);
-        String formattedDate = date.format(formatter);
-        dateOfBirthInput.shouldBe(Condition.visible).setValue(formattedDate).pressEnter();
+        dateOfBirthInput.click();
+
+        SelenideElement datePicker = $(".react-datepicker");
+        datePicker.shouldBe(Condition.visible);
+
+        SelenideElement yearSelect = $(".react-datepicker__year-select");
+        if (yearSelect.exists()) {
+            yearSelect.selectOption(String.valueOf(date.getYear()));
+        }
+
+        SelenideElement monthSelect = $(".react-datepicker__month-select");
+        if (monthSelect.exists()) {
+            monthSelect.selectOption(date.getMonth().getDisplayName(
+                    TextStyle.FULL_STANDALONE, Locale.ENGLISH));
+        }
+
+        String dayClass = String.format(".react-datepicker__day--%03d:not(.react-datepicker__day--outside-month)",
+                date.getDayOfMonth());
+        $(dayClass).click();
+
         return this;
     }
 

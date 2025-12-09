@@ -28,7 +28,7 @@ public class FormTest extends UnauthorizedSelenideTest{
         data.put("email", "jenkins.jenkins@jenkins.com");
         data.put("gender", UserFormModel.Gender.MALE);
         data.put("mobile", "8005553535");
-        // data.put("birthDate", LocalDate.now());
+        data.put("birthDate", LocalDate.of(1995, 5, 23));
         data.put("subjects", List.of("Maths", "English"));
         data.put("hobbies", Set.of(UserFormModel.Hobby.SPORTS, UserFormModel.Hobby.MUSIC));
         data.put("address", "123 Lenina Street");
@@ -59,7 +59,7 @@ public class FormTest extends UnauthorizedSelenideTest{
          assertEquals(data.get("email"), submittedData.getEmail());
          assertEquals(data.get("gender"), submittedData.getGender());
          assertEquals(data.get("mobile"), submittedData.getMobile());
-         // assertEquals(data.get("birthDate"), submittedData.getDateOfBirth());
+         assertEquals(data.get("birthDate"), submittedData.getDateOfBirth());
         assertEquals(data.get("address"), submittedData.getAddress());
         assertEquals(data.get("state"), submittedData.getState());
         assertEquals(data.get("city"), submittedData.getCity());
