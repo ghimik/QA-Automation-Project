@@ -1,6 +1,7 @@
 package com.qa.project.ui.pages;
 
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideConfig;
 import com.codeborne.selenide.SelenideElement;
 import com.qa.project.common.config.Properties;
 import org.openqa.selenium.By;
@@ -26,8 +27,13 @@ public class MainPage {
     }
 
     public static MainPage openMainPage() {
-        Selenide.open(Properties.BASE_URL);
+        Selenide.open("/");
         return new MainPage();
+    }
+
+    public FormsPage clickOnFormsButton() {
+        formsButton.scrollIntoView(true).click();
+        return new FormsPage();
     }
 
 }
