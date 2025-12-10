@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UserNameTest extends AuthorizedSelenideTest{
 
+    // @Test
     public void checkIfUserNameInLabelMatchesWithLogin() {
         assertTrue(
         authorizeManually()

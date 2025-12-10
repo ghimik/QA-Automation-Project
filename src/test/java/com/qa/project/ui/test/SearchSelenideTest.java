@@ -14,6 +14,7 @@ public class SearchSelenideTest extends UnauthorizedSelenideTest {
      * Выполняется открытие основной страницы, переход на страницу Book Application,
      * ввод поиска с заданным промптом, проверка что title каждой страницы содержит указанный промпт
      */
+    // @Test
     public void checkIfAllBooksTitlesContainsSearchPrompt() {
         openMainPage()
                 .clickOnBookStoreApplicationButton()
