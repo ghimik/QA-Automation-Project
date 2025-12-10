@@ -2,10 +2,7 @@ package com.qa.project.ui.pages;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import com.qa.project.ui.components.ElementsPageCheckBoxComponent;
-import com.qa.project.ui.components.ElementsPageRadioButtonComponent;
-import com.qa.project.ui.components.ElementsPageTextBoxComponent;
-import com.qa.project.ui.components.ElementsPageWebTablesComponent;
+import com.qa.project.ui.components.*;
 
 import static com.codeborne.selenide.Selenide.$x;
 
@@ -41,6 +38,22 @@ public class ElementsPage {
         webTablesMenuItem.click();
         return new ElementsPageWebTablesComponent();
     }
+
+    public ElementsPageButtonsComponent clickOnButtonsButton() {
+        buttonsMenuItem.click();
+        return new ElementsPageButtonsComponent();
+    }
+
+    public ElementsPageLinksComponent clickOnLinksButton() {
+        linksMenuItem.click();
+        return new ElementsPageLinksComponent();
+    }
+
+    public BrokenLinksImagesComponent clickOnBrokenLinksImagesButton() {
+        brokenLinksImagesMenuItem.click();
+        return new BrokenLinksImagesComponent();
+    }
+
 
     public static ElementsPage open() {
         Selenide.open("/elements");
