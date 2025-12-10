@@ -2,6 +2,8 @@ package com.qa.project.ui.components;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,12 +14,16 @@ import static com.codeborne.selenide.Selenide.*;
 public class ElementsPageCheckBoxComponent {
     private final SelenideElement expandAllButton = $("button[title='Expand all']");
     private final SelenideElement collapseAllButton = $("button[title='Collapse all']");
-    private final SelenideElement resultSpan = $(".text-success");
+    private final ElementsCollection resultSpan = $$(".text-success");
 
     private final ElementsCollection allCheckboxes = $$("input[type='checkbox']");
 
     private SelenideElement checkboxById(String id) {
         return $("#tree-node-" + id);
+    }
+
+    private SelenideElement toggleExpandButtonByLabel(String label) {
+        return $x(String.format("//label[@for='tree-node-%s']/../button", label));
     }
 
     public ElementsPageCheckBoxComponent expandAll() {
@@ -30,6 +36,11 @@ public class ElementsPageCheckBoxComponent {
         return this;
     }
 
+    public ElementsPageCheckBoxComponent toggleExpandByLabel(String label) {
+        toggleExpandButtonByLabel(label).click();
+        return this;
+    }
+
     public ElementsPageCheckBoxComponent select(String... checkboxIds) {
         for (String id : checkboxIds) {
             checkboxById(id).parent().click();
@@ -38,7 +49,7 @@ public class ElementsPageCheckBoxComponent {
     }
 
     public ElementsPageCheckBoxComponent selectByLabel(String label) {
-        $x(String.format("//span[contains(@class, 'rct-title') and text()='%s']/preceding-sibling::label", label))
+        $x(String.format("//label[@for='tree-node-%s']", label))
                 .click();
         return this;
     }
@@ -49,24 +60,18 @@ public class ElementsPageCheckBoxComponent {
     }
 
     public boolean isResultVisible() {
-        return resultSpan.is(visible);
+        return !resultSpan.isEmpty();
     }
 
     public String getResultText() {
-        return resultSpan.getText();
+        return resultSpan.asDynamicIterable().stream().map(SelenideElement::text).collect(Collectors.joining(" "));
     }
 
     public List<String> getSelectedItemsFromResult() {
-        if (!isResultVisible()) {
-            return List.of();
-        }
+
 
         final String resultText = getResultText();
-        return resultText.lines()
-                .skip(1)
-                .map(String::trim)
-                .filter(line -> !line.isEmpty())
-                .collect(Collectors.toList());
+        return List.of(resultText.split(" "));
     }
 
     public boolean isSelected(String checkboxId) {
