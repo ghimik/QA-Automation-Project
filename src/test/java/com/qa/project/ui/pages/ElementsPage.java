@@ -55,7 +55,7 @@ public class ElementsPage {
     }
 
 
-    public static ElementsPage open() {
+    public static ElementsPage openElementsPage() {
         Selenide.open("/elements");
         return new ElementsPage();
     }

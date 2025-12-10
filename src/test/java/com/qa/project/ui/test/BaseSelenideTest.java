@@ -2,9 +2,13 @@ package com.qa.project.ui.test;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideConfig;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+
+import static com.codeborne.selenide.Selenide.$;
 
 public abstract class BaseSelenideTest {
 
@@ -13,7 +17,7 @@ public abstract class BaseSelenideTest {
         WebDriverManager.safaridriver().setup();
         Configuration.browser = "safari";
         Configuration.baseUrl = "https://demoqa.com";
-        Configuration.browserSize = "2880x1800";
+        Configuration.browserSize = "1600x900";
         Configuration.headless = false;
     }
 

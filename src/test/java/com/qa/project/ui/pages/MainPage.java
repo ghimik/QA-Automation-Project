@@ -36,4 +36,19 @@ public class MainPage {
         return new FormsPage();
     }
 
+    public ElementsPage clickOnElementsButton() {
+        elementsButton.scrollIntoView(true).click();
+        return new ElementsPage();
+    }
+
+    public AlertsFramesWindowsPage clickOnAlertsFramesWindowsButton() {
+        alertsFramesWindowsButton.scrollIntoView(true).click();
+        return new AlertsFramesWindowsPage();
+    }
+
+    public InteractionsPage clickOnInteractionsButton() {
+        interactionsButton.scrollIntoView(true).click();
+        return new InteractionsPage();
+    }
+
 }
