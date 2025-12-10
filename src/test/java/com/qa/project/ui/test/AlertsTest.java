@@ -36,7 +36,7 @@ public class AlertsTest extends UnauthorizedSelenideTest {
         );
     }
 
-    Test
+    @Test
     void testAlertNotAppearingAfter3Seconds() {
         assertThrows(AlertNotFoundError.class, () -> openAlertsFramesWindowsPage()
                 .clickOnAlertsButton()
