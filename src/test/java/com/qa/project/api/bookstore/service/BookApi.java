@@ -1,13 +1,12 @@
-package com.qa.project.api.service;
+package com.qa.project.api.bookstore.service;
 
-import com.qa.project.api.model.Book;
+import com.qa.project.api.bookstore.model.Book;
 import io.restassured.response.Response;
-import org.hamcrest.Matchers;
 
 import java.util.List;
 import java.util.Optional;
 
-import static com.qa.project.api.specs.BooksSpecifications.defaultRequestSpecification;
+import static com.qa.project.api.bookstore.specs.BooksSpecifications.defaultRequestSpecification;
 import static io.restassured.RestAssured.given;
 
 public final class BookApi {

@@ -1,4 +1,4 @@
-package com.qa.project.api.specs;
+package com.qa.project.api.bookstore.specs;
 
 import com.qa.project.common.config.Properties;
 import io.restassured.builder.RequestSpecBuilder;

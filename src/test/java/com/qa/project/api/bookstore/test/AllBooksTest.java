@@ -1,26 +1,13 @@
-package com.qa.project.api.test;
+package com.qa.project.api.bookstore.test;
 
-import com.qa.project.api.model.AllBooks;
-import com.qa.project.api.model.Book;
-import com.qa.project.api.specs.BooksSpecifications;
-import com.qa.project.common.config.Properties;
-import io.restassured.RestAssured;
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.http.ContentType;
-import io.restassured.specification.RequestSpecification;
-import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
+import com.qa.project.api.bookstore.specs.BooksSpecifications;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.Parameter;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.net.URI;
-import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static com.qa.project.api.service.BookApi.getAllBooks;
+import static com.qa.project.api.bookstore.service.BookApi.getAllBooks;
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.empty;
@@ -39,7 +26,7 @@ public class AllBooksTest {
                 .when()
                 .get("BookStore/v1/Books/")
                 .then()
-                .spec(BooksSpecifications.successResponseSpecification());
+                .spec(com.qa.project.api.bookstore.specs.BooksSpecifications.successResponseSpecification());
 
     }
 
@@ -47,23 +34,23 @@ public class AllBooksTest {
     @ValueSource(strings = {"9781491904244", "9781449337711"})
     public void testAtLeastOneBookGotByISBN(String isbn) {
         given()
-                .spec(BooksSpecifications.defaultRequestSpecification())
+                .spec(com.qa.project.api.bookstore.specs.BooksSpecifications.defaultRequestSpecification())
                 .param("ISBN", isbn)
                 .when()
                 .get("BookStore/v1/Book/")
                 .then()
-                .spec(BooksSpecifications.successResponseSpecification())
+                .spec(com.qa.project.api.bookstore.specs.BooksSpecifications.successResponseSpecification())
                 .body(not(empty()));
     }
 
     @Test
     public void testNoBooksGotByInvalidISBN() {
-        given().spec(BooksSpecifications.defaultRequestSpecification())
+        given().spec(com.qa.project.api.bookstore.specs.BooksSpecifications.defaultRequestSpecification())
                 .param("ISBN", "-1")
                 .when()
                 .get("BookStore/v1/Book/")
                 .then()
-                .spec(BooksSpecifications.badRequestResponseSpecification());
+                .spec(com.qa.project.api.bookstore.specs.BooksSpecifications.badRequestResponseSpecification());
     }
 
     @Test

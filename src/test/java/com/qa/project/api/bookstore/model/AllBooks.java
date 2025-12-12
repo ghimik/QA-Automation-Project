@@ -1,5 +1,6 @@
-package com.qa.project.api.model;
+package com.qa.project.api.bookstore.model;
 
+import com.qa.project.api.bookstore.model.Book;
 import lombok.Data;
 
 import java.util.ArrayList;

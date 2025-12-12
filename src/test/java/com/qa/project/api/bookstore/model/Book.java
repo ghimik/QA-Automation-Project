@@ -1,9 +1,7 @@
-package com.qa.project.api.model;
+package com.qa.project.api.bookstore.model;
 
 import lombok.Data;
-import lombok.Value;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 @Data
