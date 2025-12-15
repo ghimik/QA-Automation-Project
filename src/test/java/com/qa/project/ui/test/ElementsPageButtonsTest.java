@@ -1,6 +1,7 @@
 package com.qa.project.ui.test;
 
 import io.qameta.allure.*;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static com.qa.project.ui.pages.ElementsPage.openElementsPage;
@@ -13,6 +14,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @Owner("alexey")
 @Link(name = "Ссылка на раздел", url = "https://demoqa.com/buttons")
 @Severity(SeverityLevel.CRITICAL)
+@Tag("ui")
+@Tag("e2e")
 public class ElementsPageButtonsTest extends UnauthorizedSelenideTest {
 
     @Test

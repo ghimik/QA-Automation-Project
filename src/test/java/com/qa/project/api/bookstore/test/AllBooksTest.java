@@ -4,6 +4,7 @@ import com.qa.project.api.bookstore.model.Book;
 import com.qa.project.api.bookstore.service.BookApi;
 import io.qameta.allure.*;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -21,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Epic("Тестирование API BookStore (demoqa.com)")
 @Owner("alexey")
 @Link(name = "Документация API", url = "https://demoqa.com/swagger/")
+@Tag("api")
 public class AllBooksTest {
 
 
@@ -28,6 +30,7 @@ public class AllBooksTest {
     @Feature("Все книги возможно получить")
     @Severity(SeverityLevel.BLOCKER)
     @Description("GET /BookStore/v1/Books должен вернуть непустой список книг")
+    @Tag("regression")
     public void testAllBooksGot() {
         Assertions.assertDoesNotThrow(BookApi::getAllBooks);
 
@@ -38,6 +41,7 @@ public class AllBooksTest {
     @Story("Получена как минимум одна книга по isbn ({isbn})")
     @Severity(SeverityLevel.CRITICAL)
     @Description("GET /BookStore/v1/Book?ISBN={isbn} возвращает одну книгу")
+    @Tag("smoke")
     public void testAtLeastOneBookGotByISBN(String isbn) {
 
         Assertions.assertDoesNotThrow(() ->
@@ -58,6 +62,7 @@ public class AllBooksTest {
     @Story("Ни одна книга по некорректному ISBN не получена (сервер вернул Bad Request)")
     @Severity(SeverityLevel.CRITICAL)
     @Description("GET /BookStore/v1/Book?ISBN={incorrectISBN} возвращает 400 Bad Request")
+    @Tag("smoke")
     public void testNoBooksGotByInvalidISBN() {
         String incorrectISBN = "-1";
         Allure.parameter("Некорректный ISBN", incorrectISBN);
@@ -74,6 +79,7 @@ public class AllBooksTest {
     @Feature("Все книги имеют not null ISBN")
     @Severity(SeverityLevel.CRITICAL)
     @Description("Все книги должны иметь непустой ISBN")
+    @Tag("regression")
     public void testAllBooksHaveISBN() {
         List<Book> books = getAllBooks();
         List<Book> booksWithoutIsbn =

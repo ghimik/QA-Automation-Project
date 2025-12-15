@@ -3,6 +3,7 @@ package com.qa.project.ui.test;
 import com.codeborne.selenide.ex.AlertNotFoundError;
 import io.qameta.allure.*;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -17,6 +18,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @Owner("alexey")
 @Link(name = "Ссылка на раздел", url = "https://demoqa.com/alerts")
 @Severity(SeverityLevel.CRITICAL)
+@Tag("ui")
+@Tag("e2e")
 public class AlertsTest extends UnauthorizedSelenideTest {
 
     @Test

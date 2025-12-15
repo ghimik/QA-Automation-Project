@@ -5,6 +5,7 @@ import com.qa.project.ui.model.SubmissionModalData;
 import com.qa.project.ui.model.UserFormModel;
 import io.qameta.allure.*;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -24,6 +25,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Owner("alexey")
 @Link(name = "Ссылка на форму", url = "https://demoqa.com/automation-practice-form")
 @Severity(SeverityLevel.BLOCKER)
+@Tag("ui")
+@Tag("e2e")
 public class FormTest extends UnauthorizedSelenideTest{
 
 

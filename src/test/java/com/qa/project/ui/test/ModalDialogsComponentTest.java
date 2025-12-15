@@ -2,6 +2,7 @@ package com.qa.project.ui.test;
 
 import io.qameta.allure.*;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static com.qa.project.ui.pages.AlertsFramesWindowsPage.openAlertsFramesWindowsPage;
@@ -11,6 +12,8 @@ import static com.qa.project.ui.pages.AlertsFramesWindowsPage.openAlertsFramesWi
 @Owner("alexey")
 @Link(name = "Ссылка на раздел", url = "https://demoqa.com/modal-dialogs")
 @Severity(SeverityLevel.CRITICAL)
+@Tag("ui")
+@Tag("e2e")
 public class ModalDialogsComponentTest extends UnauthorizedSelenideTest {
 
     @Test

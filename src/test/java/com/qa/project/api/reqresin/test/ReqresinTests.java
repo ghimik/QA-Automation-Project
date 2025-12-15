@@ -3,6 +3,7 @@ package com.qa.project.api.reqresin.test;
 import com.qa.project.api.reqresin.endpoints.UserActionsEndpoints;
 import com.qa.project.api.reqresin.model.*;
 import io.qameta.allure.*;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.atomic.AtomicReference;
@@ -17,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Epic("Тестирование API reqres.in")
 @Owner("alexey")
 @Link(name = "Документация API", url = "https://reqres.in/")
+@Tag("api")
 public class ReqresinTests {
 
     @Test

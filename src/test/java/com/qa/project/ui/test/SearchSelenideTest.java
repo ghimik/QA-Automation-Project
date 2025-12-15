@@ -3,6 +3,7 @@ package com.qa.project.ui.test;
 
 import io.qameta.allure.*;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -17,6 +18,8 @@ import static com.qa.project.ui.pages.MainPage.openMainPage;
 @Owner("alexey")
 @Link(name = "Ссылка на Book Store", url = "https://demoqa.com/books")
 @Severity(SeverityLevel.CRITICAL)
+@Tag("ui")
+@Tag("e2e")
 public class SearchSelenideTest extends UnauthorizedSelenideTest {
 
     private static List<String> searchTermsProvider() {return List.of("JavaScript"); }

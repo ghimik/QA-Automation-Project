@@ -3,6 +3,7 @@ package com.qa.project.ui.test;
 import com.qa.project.ui.components.ElementsPageWebTablesComponent;
 import com.qa.project.ui.model.EmployeeRecord;
 import io.qameta.allure.*;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -15,6 +16,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @Owner("alexey")
 @Link(name = "Ссылка на раздел", url = "https://demoqa.com/webtables")
 @Severity(SeverityLevel.CRITICAL)
+@Tag("ui")
+@Tag("e2e")
 public class WebTableComponentTest extends UnauthorizedSelenideTest {
 
     @Test

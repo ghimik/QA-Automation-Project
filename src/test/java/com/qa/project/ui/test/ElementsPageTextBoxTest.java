@@ -3,6 +3,7 @@ package com.qa.project.ui.test;
 import com.qa.project.ui.components.ElementsPageTextBoxComponent;
 import com.qa.project.ui.model.TextBoxData;
 import io.qameta.allure.*;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -16,6 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Owner("alexey")
 @Link(name = "Ссылка на раздел", url = "https://demoqa.com/text-box")
 @Severity(SeverityLevel.CRITICAL)
+@Tag("ui")
+@Tag("e2e")
 public class ElementsPageTextBoxTest extends UnauthorizedSelenideTest {
 
     private static Stream<TextBoxData> textBoxDataProvider() {

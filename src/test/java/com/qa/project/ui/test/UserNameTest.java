@@ -2,6 +2,7 @@ package com.qa.project.ui.test;
 
 import com.qa.project.common.config.Properties;
 import io.qameta.allure.*;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -11,6 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Owner("alexey")
 @Link(name = "Ссылка на профиль", url = "https://demoqa.com/profile")
 @Severity(SeverityLevel.BLOCKER)
+@Tag("ui")
+@Tag("e2e")
 public class UserNameTest extends AuthorizedSelenideTest {
 
     @Test

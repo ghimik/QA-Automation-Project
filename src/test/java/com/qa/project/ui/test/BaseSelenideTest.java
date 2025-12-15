@@ -19,6 +19,7 @@ public abstract class BaseSelenideTest {
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.browserSize = "1600x900";
         Configuration.headless = false;
+        Configuration.timeout = 30000;
     }
 
     @BeforeEach
