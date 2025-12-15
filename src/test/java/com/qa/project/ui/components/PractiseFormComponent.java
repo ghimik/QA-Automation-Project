@@ -8,6 +8,7 @@ import com.qa.project.ui.model.UserFormModel.City;
 import com.qa.project.ui.model.UserFormModel.Gender;
 import com.qa.project.ui.model.UserFormModel.Hobby;
 import com.qa.project.ui.model.UserFormModel.States;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 
@@ -44,21 +45,25 @@ public class PractiseFormComponent {
     private final SelenideElement cityDropdown = $("#city");
 
 
+    @Step("Ввести имя: {firstName}")
     public PractiseFormComponent setFirstName(String firstName) {
         firstNameInput.shouldBe(Condition.visible).setValue(firstName).doubleClick();
         return this;
     }
 
+    @Step("Ввести фамилию: {lastName}")
     public PractiseFormComponent setLastName(String lastName) {
         lastNameInput.shouldBe(Condition.visible).setValue(lastName);
         return this;
     }
 
+    @Step("Ввести email: {email}")
     public PractiseFormComponent setEmail(String email) {
         emailInput.shouldBe(Condition.visible).setValue(email);
         return this;
     }
 
+    @Step("Выбрать пол: {gender}")
     public PractiseFormComponent setGender(Gender gender) {
         $(getGenderCheckBoxLocator(gender))
                 .shouldBe(Condition.visible)
@@ -66,6 +71,7 @@ public class PractiseFormComponent {
         return this;
     }
 
+    @Step("Ввести номер телефона: {mobileNumber}")
     public PractiseFormComponent setMobileNumber(String mobileNumber) {
         mobileInput.shouldBe(Condition.visible).setValue(mobileNumber);
         return this;
@@ -82,7 +88,7 @@ public class PractiseFormComponent {
      * стандартные методы Selenide здесь бессильны.
      * вот единственный рабочий способ - через интерфейс календаря
      */
-
+    @Step("Установить дату рождения: {date}")
     public PractiseFormComponent setDateOfBirth(LocalDate date) {
         dateOfBirthInput.click();
 
@@ -107,6 +113,7 @@ public class PractiseFormComponent {
         return this;
     }
 
+    @Step("Выбрать предметы: {subjects}")
     public PractiseFormComponent setSubjects(List<String> subjects) {
         for (String subject : subjects) {
             subjectsInput.shouldBe(Condition.visible).setValue(subject).pressEnter();
@@ -114,6 +121,7 @@ public class PractiseFormComponent {
         return this;
     }
 
+    @Step("Выбрать хобби: {hobbies}")
     public PractiseFormComponent setHobbies(Set<Hobby> hobbies) {
         $$(hobbiesCheckboxes).forEach(checkbox -> {
             if (checkbox.isSelected()) {
@@ -136,16 +144,19 @@ public class PractiseFormComponent {
         };
     }
 
+    @Step("Загрузить файл: {file.getName()}")
     public PractiseFormComponent uploadPicture(File file) {
         uploadPictureInput.shouldBe(Condition.visible).uploadFile(file);
         return this;
     }
 
+    @Step("Ввести текущий адрес: {address}")
     public PractiseFormComponent setCurrentAddress(String address) {
         currentAddressTextarea.shouldBe(Condition.visible).setValue(address);
         return this;
     }
 
+    @Step("Выбрать штат: {state}")
     public PractiseFormComponent setState(States state) {
         stateDropdown.shouldBe(Condition.visible).click();
         $(By.xpath("//div[contains(@class, 'menu')]//div[text()='" + StringHelper.stateToDropdown(state) + "']"))
@@ -154,6 +165,7 @@ public class PractiseFormComponent {
         return this;
     }
 
+    @Step("Выбрать город: {city}")
     public PractiseFormComponent setCity(City city) {
         cityDropdown.shouldBe(Condition.visible).click();
         $(By.xpath("//div[contains(@class, 'menu')]//div[text()='" + StringHelper.toLowerCaseFirstLetterUpperCase(city.name()) + "']"))
@@ -162,11 +174,13 @@ public class PractiseFormComponent {
         return this;
     }
 
+    @Step("Отправить форму (Submit)")
     public SubmissionModalComponent submitForm() {
         submitButton.shouldBe(Condition.enabled).click();
         return new SubmissionModalComponent();
     }
 
+    @Step("Заполнить всю форму данными из модели")
     public PractiseFormComponent fillForm(UserFormModel model) {
         setFirstName(model.getUsername().split(" ")[0]);
         setLastName(model.getUsername().split(" ").length > 1 ? model.getUsername().split(" ")[1] : "");
@@ -196,7 +210,7 @@ public class PractiseFormComponent {
         return this;
     }
 
-
+    @Step("Очистить все поля формы")
     public void clearForm() {
         firstNameInput.clear();
         lastNameInput.clear();

@@ -4,6 +4,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.qa.project.ui.components.LoginFormComponent;
 import com.qa.project.ui.model.BookModel;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
 import java.util.List;
@@ -13,23 +14,22 @@ import static com.codeborne.selenide.Selenide.*;
 public class BookStoreApplicationPage {
 
     private static final String booksList = "//div[@class=\"rt-tbody\"]";
-
     private static final String bookInTable = "div/div/div";
-
     private static final String userNameLabel = "//label[@id='userName-value']";
 
     private final SelenideElement loginButton = $(By.xpath("//li[./span[text()='Login']]"));
-
     private final SelenideElement searchTextBox = $(By.xpath("//input[@id='searchBox']"));
 
     public BookStoreApplicationPage() {
     }
 
+    @Step("Кликнуть на кнопку Login в меню")
     public LoginFormComponent clickOnLoginButton() {
         loginButton.click();
         return new LoginFormComponent();
     }
 
+    @Step("Найти книги по названию: {bookName}")
     public List<BookModel> searchBooks(String bookName) {
         searchTextBox.scrollIntoView(true).setValue(bookName);
         return $$x(booksList)
@@ -39,6 +39,7 @@ public class BookStoreApplicationPage {
                 .toList();
     }
 
+    @Step("Получить имя текущего пользователя")
     public String getUserName() {
         return $x(userNameLabel).getText();
     }

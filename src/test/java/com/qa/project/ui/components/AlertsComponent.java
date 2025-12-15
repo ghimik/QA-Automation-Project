@@ -2,6 +2,7 @@ package com.qa.project.ui.components;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.openqa.selenium.Alert;
@@ -24,16 +25,19 @@ public class AlertsComponent {
     private final SelenideElement promptButton = $("#promtButton");
 
     public static class AlertActions {
+        @Step("Принять алерт")
         public AlertActions accept() {
             Selenide.confirm();
             return this;
         }
 
+        @Step("Отклонить алерт")
         public AlertActions dismiss() {
             Selenide.dismiss();
             return this;
         }
 
+        @Step("Отправить промпт в PromtBox")
         public AlertActions sendPrompt(String text) {
             Selenide.prompt(text);
             return this;
@@ -61,21 +65,25 @@ public class AlertsComponent {
         public String getText() { return locator.shouldBe(visible).getText(); }
     }
 
+    @Step("Кликнуть на кнопку с простым алертом")
     public AlertActions clickAlertButton() {
         alertButton.click();
         return new AlertActions();
     }
 
+    @Step("Кликнуть на кнопку с алертом с таймером")
     public AlertActions clickTimerAlertButton() {
         timerAlertButton.click();
         return new AlertActions();
     }
 
+    @Step("Кликнуть на кнопку с ConfirmBox")
     public AlertActionsWithResultingSpan clickConfirmButton() {
         confirmButton.click();
         return new AlertActionsWithResultingSpan($x("//span[@id='confirmResult']"));
     }
 
+    @Step("Кликнуть на кнопку вызывающую промпт")
     public AlertActionsWithResultingSpan clickPromptButton() {
         promptButton.click();
         return new AlertActionsWithResultingSpan($x("//span[@id='promptResult']"));

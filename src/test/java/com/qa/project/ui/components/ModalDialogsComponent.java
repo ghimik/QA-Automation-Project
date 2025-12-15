@@ -1,6 +1,7 @@
 package com.qa.project.ui.components;
 
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import lombok.Getter;
 
 import static com.codeborne.selenide.Condition.*;
@@ -23,12 +24,15 @@ public class ModalDialogsComponent {
     private final SelenideElement closeModalXButton = $(".modal-header .close");
 
     public class SmallModal {
+
+        @Step("Проверить, что Small Modal открыт")
         public SmallModal verifyOpened() {
             modalDialog.shouldBe(visible);
             modalTitle.shouldHave(text("Small Modal"));
             return this;
         }
 
+        @Step("Получить заголовок Small Modal")
         public String getTitle() {
             return modalTitle.getText();
         }
@@ -37,12 +41,14 @@ public class ModalDialogsComponent {
             return modalBody.getText();
         }
 
+        @Step("Закрыть Small Modal кнопкой Close")
         public ModalDialogsComponent close() {
             closeSmallModalButton.click();
             modalDialog.should(disappear);
             return ModalDialogsComponent.this;
         }
 
+        @Step("Закрыть Small Modal крестиком (X)")
         public ModalDialogsComponent closeWithX() {
             closeModalXButton.click();
             modalDialog.should(disappear);
@@ -51,6 +57,8 @@ public class ModalDialogsComponent {
     }
 
     public class LargeModal {
+
+        @Step("Проверить, что Large Modal открыт")
         public LargeModal verifyOpened() {
             modalDialog.shouldBe(visible);
             modalTitle.shouldHave(text("Large Modal"));
@@ -65,12 +73,14 @@ public class ModalDialogsComponent {
             return modalBody.getText();
         }
 
+        @Step("Закрыть Large Modal кнопкой Close")
         public ModalDialogsComponent close() {
             closeLargeModalButton.click();
             modalDialog.should(disappear);
             return ModalDialogsComponent.this;
         }
 
+        @Step("Закрыть Large Modal крестиком (X)")
         public ModalDialogsComponent closeWithX() {
             closeModalXButton.click();
             modalDialog.should(disappear);
@@ -78,16 +88,19 @@ public class ModalDialogsComponent {
         }
     }
 
+    @Step("Открыть Small Modal")
     public SmallModal openSmallModal() {
         smallModalButton.click();
         return new SmallModal();
     }
 
+    @Step("Открыть Large Modal")
     public LargeModal openLargeModal() {
         largeModalButton.click();
         return new LargeModal();
     }
 
+    @Step("Проверить загрузку компонента Modal Dialogs")
     public ModalDialogsComponent verifyComponentLoaded() {
         root.shouldBe(visible);
         root.$("h1").shouldHave(text("Modal Dialogs"));

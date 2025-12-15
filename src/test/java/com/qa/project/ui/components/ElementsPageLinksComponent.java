@@ -3,6 +3,7 @@ package com.qa.project.ui.components;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import com.qa.project.ui.pages.MainPage;
+import io.qameta.allure.Step;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -40,15 +41,33 @@ public class ElementsPageLinksComponent {
 
     private final SelenideElement linkResponse = $("#linkResponse");
 
+    @Step("Кликнуть на ссылку Created (201)")
     public ApiLinksBranch clickOnCreatedLink() { return clickOnLinkWrapper(createdLink); }
+
+    @Step("Кликнуть на ссылку No Content (204)")
     public ApiLinksBranch clickOnNoContentLink() { return clickOnLinkWrapper(noContentLink); }
+
+    @Step("Кликнуть на ссылку Moved (301)")
     public ApiLinksBranch clickOnMovedLink() { return  clickOnLinkWrapper(movedLink);}
+
+    @Step("Кликнуть на ссылку Bad Request (400)")
     public ApiLinksBranch clickOnBadRequestLink() { return  clickOnLinkWrapper(badRequestLink);}
+
+    @Step("Кликнуть на ссылку Unauthorized (401)")
     public ApiLinksBranch clickOnUnauthorizedLink() { return  clickOnLinkWrapper(unauthorizedLink);}
+
+    @Step("Кликнуть на ссылку Forbidden (403)")
     public ApiLinksBranch clickOnForbiddenLink() { return  clickOnLinkWrapper(forbiddenLink);}
+
+    @Step("Кликнуть на ссылку Not Found (404)")
     public ApiLinksBranch clickOnNotFoundLink() { return clickOnLinkWrapper(notFoundLink);}
+
+    @Step("Кликнуть на Simple Link (открывает новую вкладку)")
     public TabLinksBranch<MainPage> clickOnSimpleLink() { return clickOnTabLinkWrapper(simpleLink, MainPage::new);}
+
+    @Step("Кликнуть на Dynamic Link (открывает новую вкладку)")
     public TabLinksBranch<MainPage> clickOnDynamicLink() { return clickOnTabLinkWrapper(dynamicLink, MainPage::new);}
+
 
     public class ApiLinksBranch {
 
@@ -68,17 +87,20 @@ public class ElementsPageLinksComponent {
             return pageObject;
         }
 
+        @Step("Переключиться на предыдущую вкладку")
         public ElementsPageLinksComponent switchToPreviousTab() {
             Selenide.switchTo().window(0);
             return parent;
         }
 
+        @Step("Закрыть текущую вкладку")
         public ElementsPageLinksComponent closeCurrentTab() {
             Selenide.closeWindow();
             return parent;
         }
     }
 
+    @Step("Кликнуть на API ссылку: {linkName}")
     public ApiLinksBranch clickOnApiLink(String linkName) {
         return switch (linkName.toLowerCase()) {
             case "created" -> clickOnCreatedLink();
