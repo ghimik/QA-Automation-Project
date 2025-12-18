@@ -16,8 +16,32 @@ public abstract class BaseSelenideTest {
 
 
     public static void setUp() {
-        WebDriverManager.safaridriver().setup();
-        Configuration.browser = "safari";
+        String browser = System.getProperty("browser",
+                System.getenv().getOrDefault("BROWSER", "chrome"));
+
+        switch (browser.toLowerCase()) {
+            case "safari":
+                WebDriverManager.safaridriver().setup();
+                Configuration.browser = "safari";
+                break;
+            case "firefox":
+                WebDriverManager.firefoxdriver().setup();
+                Configuration.browser = "firefox";
+                break;
+            case "edge":
+                WebDriverManager.edgedriver().setup();
+                Configuration.browser = "edge";
+                break;
+            case "opera":
+                WebDriverManager.operadriver().setup();
+                Configuration.browser = "opera";
+                break;
+            case "chrome":
+            default:
+                WebDriverManager.chromedriver().setup();
+                Configuration.browser = "chrome";
+                break;
+        }
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.browserSize = "1600x900";
         Configuration.headless = false;
