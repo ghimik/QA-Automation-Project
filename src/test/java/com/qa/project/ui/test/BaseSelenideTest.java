@@ -14,8 +14,8 @@ public abstract class BaseSelenideTest {
 
 
     public static void setUp() {
-        WebDriverManager.safaridriver().setup();
-        Configuration.browser = "safari";
+        WebDriverManager.chromedriver().setup();
+        Configuration.browser = "chrome";
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.browserSize = "1600x900";
         Configuration.headless = false;

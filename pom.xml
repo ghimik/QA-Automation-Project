@@ -110,7 +110,7 @@
 		<dependency>
 			<groupId>io.qameta.allure</groupId>
 			<artifactId>allure-junit5</artifactId>
-			<version>2.27.0</version> <!-- Актуальную версию смотрим на сайте -->
+			<version>2.27.0</version>
 			<scope>test</scope>
 		</dependency>
 
