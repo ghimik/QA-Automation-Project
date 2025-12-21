@@ -1,0 +1,144 @@
+pipeline {
+    agent any
+
+    parameters {
+        choice(
+            name: 'BROWSER',
+            choices: ['chrome', 'firefox'],
+            description: 'Browser used to run autotests'
+        )
+        string(
+            name: 'BROWSER_VERSION',
+            defaultValue: '120.0',
+            description: 'Selected browser version'
+        )
+        string(
+            name: 'WINDOW_SIZE',
+            defaultValue: '1920x1080',
+            description: 'Browser window size'
+        )
+        string(
+            name: 'PAGE_LOAD_TIMEOUT',
+            defaultValue: '20000',
+            description: 'Page load timeout, millis'
+        )
+        string(
+            name: 'TIMEOUT',
+            defaultValue: '10000',
+            description: 'Selenide timeout'
+        )
+    }
+
+    environment {
+        SELENIDE_REMOTE = 'http://selenoid:4444/wd/hub'
+        ALLURE_RESULTS = 'allure-results'
+        BASE_URL = 'https://demoqa.com'
+        REQRESIN_API_KEY = credentials('reqresin-api-key')
+
+    }
+
+    options {
+        timestamps()
+        ansiColor('xterm')
+    }
+
+    tools {
+            maven 'maven-3.9.12'
+        }
+
+    stages {
+
+        stage('Check Maven') {
+                steps {
+                    sh '''
+                        which mvn
+                        mvn -v
+                    '''
+                }
+        }
+
+
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+
+
+        stage('Build') {
+
+            steps {
+
+                script {
+                            sh 'mvn clean compile'
+                        }
+            }
+        }
+
+        stage('UI Tests') {
+            steps {
+                script {
+                    sh """
+                                                mvn clean test \
+                                                  -Dselenide.remote=${SELENIDE_REMOTE} \
+                                                  -Dselenide.browser=${params.BROWSER} \
+                                                  -Dselenide.browserVersion=${params.BROWSER_VERSION} \
+                                                  -Dselenide.headless=true \
+                                                  -Dselenide.browserCapabilities.enableVNC=true \
+                                                  -Dselenide.browserCapabilities.enableVideo=true \
+                                                  -Dallure.results.directory=${ALLURE_RESULTS} \
+                                                  -Dselenide.browserSize=${params.WINDOW_SIZE} \
+                                                  -Dselenide.pageLoadTimeout=${params.PAGE_LOAD_TIMEOUT} \
+                                                  -Dselenide.timeout=${params.TIMEOUT} \
+                                                  -Dselenide.baseUrl=${BASE_URL} \
+                                                  -Dgroup=ui
+                                            """
+                }
+            }
+        }
+
+        stage('API Tests') {
+                    steps {
+                        script {
+                            sh """
+                                                        mvn clean test \
+                                                          -Dselenide.remote=${SELENIDE_REMOTE} \
+                                                          -Dselenide.browser=${params.BROWSER} \
+                                                          -Dselenide.browserVersion=${params.BROWSER_VERSION} \
+                                                          -Dselenide.headless=true \
+                                                          -Dselenide.browserCapabilities.enableVNC=true \
+                                                          -Dselenide.browserCapabilities.enableVideo=true \
+                                                          -Dallure.results.directory=${ALLURE_RESULTS} \
+                                                          -Dselenide.browserSize=${params.WINDOW_SIZE} \
+                                                          -Dselenide.pageLoadTimeout=${params.PAGE_LOAD_TIMEOUT} \
+                                                          -Dselenide.timeout=${params.TIMEOUT} \
+                                                          -Dselenide.baseUrl=${BASE_URL} \
+                                                          -Dgroup=api
+                                                    """
+                        }
+                    }
+                }
+
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: 'build/reports/tests/**/*', allowEmptyArchive: true
+            archiveArtifacts artifacts: '**/*.mp4', allowEmptyArchive: true
+
+            allure includeProperties:
+               false,
+               jdk: '',
+               results: [[path: 'build/allure-results']]
+        }
+
+        failure {
+            echo "Tests failed on ${params.BROWSER}"
+        }
+
+        success {
+            echo "Tests passed on ${params.BROWSER}"
+        }
+    }
+}

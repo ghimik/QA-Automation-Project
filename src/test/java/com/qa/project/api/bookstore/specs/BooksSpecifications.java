@@ -1,6 +1,6 @@
 package com.qa.project.api.bookstore.specs;
 
-import com.qa.project.common.config.Properties;
+import com.qa.project.common.config.Config;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
@@ -15,7 +15,7 @@ public final class BooksSpecifications {
 
     public static RequestSpecification defaultRequestSpecification() {
         return new RequestSpecBuilder()
-                .setBaseUri(Properties.BASE_URL)
+                .setBaseUri(Config.baseUrl())
                 .setContentType(ContentType.JSON)
                 .build();
     }

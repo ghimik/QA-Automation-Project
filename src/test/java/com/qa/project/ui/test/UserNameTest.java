@@ -1,6 +1,6 @@
 package com.qa.project.ui.test;
 
-import com.qa.project.common.config.Properties;
+import com.qa.project.common.config.Config;
 import io.qameta.allure.*;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -20,16 +20,16 @@ public class UserNameTest extends AuthorizedSelenideTest {
     @Story("Имя пользователя после авторизации")
     @Description("Проверка что после авторизации в интерфейсе отображается корректное имя пользователя")
     public void checkIfUserNameInLabelMatchesWithLogin() {
-        Allure.parameter("Ожидаемое имя пользователя", Properties.TEST_USER_USERNAME);
+        Allure.parameter("Ожидаемое имя пользователя", Config.testUsername());
 
         String actualUserName = authorizeManually()
                 .clickOnGoToBookStoreButton()
                 .getUserName();
 
         assertTrue(
-                actualUserName.contentEquals(Properties.TEST_USER_USERNAME),
+                actualUserName.contentEquals(Config.testUsername()),
                 String.format("Имя пользователя должно быть '%s'; получено: '%s'",
-                        Properties.TEST_USER_USERNAME, actualUserName)
+                        Config.testUsername(), actualUserName)
         );
     }
 }

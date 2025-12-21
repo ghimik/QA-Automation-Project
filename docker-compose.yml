@@ -4,7 +4,6 @@ services:
   selenoid:
     image: aerokube/selenoid:latest-release
     restart: unless-stopped
-    network_mode: bridge
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./selenoid/browsers.json:/etc/selenoid/browsers.json:ro
@@ -27,9 +26,8 @@ services:
     ports:
       - "8081:8080"
       - "50000:50000"
-    network_mode: bridge
     volumes:
-      - jenkins_home:/var/jenkins_home
+      - ./jenkins/:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - JAVA_OPTS=-Djenkins.install.runSetupWizard=false

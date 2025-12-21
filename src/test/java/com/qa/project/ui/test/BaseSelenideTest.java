@@ -47,14 +47,14 @@ public abstract class BaseSelenideTest {
 //                break;
 //        }
 
-        Configuration.browser = "chrome";
-        // WebDriverManager.chromedriver().setup();
-        Configuration.remote = "http://localhost:4444/wd/hub";
-        Configuration.headless = true;
-        Configuration.timeout = 10000;
-        Configuration.pageLoadTimeout = 20000;
-        Configuration.browserSize="1920x1080";
-        Configuration.baseUrl = "https://demoqa.com";
+//        Configuration.browser = "chrome";
+//        // WebDriverManager.chromedriver().setup();
+//        Configuration.remote = "http://selenoid:4444/wd/hub";
+//        Configuration.headless = true;
+//        Configuration.timeout = 10000;
+//        Configuration.pageLoadTimeout = 20000;
+//        Configuration.browserSize="1920x1080";
+//        Configuration.baseUrl = "https://demoqa.com";
 
 
 
