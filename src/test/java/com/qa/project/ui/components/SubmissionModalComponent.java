@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import com.qa.project.ui.model.SubmissionModalData;
 import com.qa.project.ui.model.UserFormModel;
+import io.qameta.allure.Step;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -23,6 +24,7 @@ public class SubmissionModalComponent {
     private static final DateTimeFormatter DATE_FORMATTER =
             DateTimeFormatter.ofPattern("dd MMMM,yyyy", Locale.ENGLISH);
 
+    @Step("Извлечь данные из модального окна подтверждения")
     public SubmissionModalData extractData() {
         waitForModal();
 

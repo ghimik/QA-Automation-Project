@@ -1,24 +1,32 @@
 package com.qa.project.ui.test;
 
 import com.codeborne.selenide.ex.AlertNotFoundError;
+import io.qameta.allure.*;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.openqa.selenium.NoAlertPresentException;
 
+import static com.codeborne.selenide.Selenide.open;
 import static com.qa.project.ui.pages.AlertsFramesWindowsPage.openAlertsFramesWindowsPage;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
-
+@Epic("Тестирование раздела Alerts (demoqa.com)")
+@Owner("alexey")
+@Link(name = "Ссылка на раздел", url = "https://demoqa.com/alerts")
+@Severity(SeverityLevel.CRITICAL)
+@Tag("ui")
+@Tag("e2e")
 public class AlertsTest extends UnauthorizedSelenideTest {
 
     @Test
+    @Story("Простой алерт возможно принять")
     void testSimpleAlertAppears() {
+
         assertDoesNotThrow(() -> openAlertsFramesWindowsPage()
                 .clickOnAlertsButton()
                 .clickAlertButton()
@@ -27,6 +35,7 @@ public class AlertsTest extends UnauthorizedSelenideTest {
 
 
     @Test
+    @Story("Алерт с таймером на 5 секунд отображается через 6")
     void testTimerAlertAfter5Seconds() {
         assertDoesNotThrow(() -> openAlertsFramesWindowsPage()
                 .clickOnAlertsButton()
@@ -37,8 +46,10 @@ public class AlertsTest extends UnauthorizedSelenideTest {
     }
 
     @Test
+    @Story("Алерт с таймером через 5 секунд не доступен через 3 секунды")
     void testAlertNotAppearingAfter3Seconds() {
-        assertThrows(AlertNotFoundError.class, () -> openAlertsFramesWindowsPage()
+        assertThrows(AlertNotFoundError.class,
+                () -> openAlertsFramesWindowsPage()
                 .clickOnAlertsButton()
                 .clickTimerAlertButton()
                 .waitForAlert(3000)
@@ -48,6 +59,7 @@ public class AlertsTest extends UnauthorizedSelenideTest {
     }
 
     @Test
+    @Story("Алерт с подтверждением при подтверждении корректно обрабатывается")
     void testConfirmButtonShowsText() {
         final String confirmText = openAlertsFramesWindowsPage()
                 .clickOnAlertsButton()
@@ -55,11 +67,14 @@ public class AlertsTest extends UnauthorizedSelenideTest {
                 .accept()
                 .getText();
 
-        assertThat(confirmText, Matchers.containsString("You selected Ok"));
+        Allure.step("Проверить, что итоговый текст соответсвует заданному при подтверждении алерта",
+                () -> assertThat(confirmText, Matchers.containsString("You selected Ok")));
+
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"Test", "Кириллический промпт", "✔️эмодзи"})
+    @Story("Выходной span содержит промпт из PromptBox")
     void testPromptTextMatches(String inputText) {
         final String outputText = openAlertsFramesWindowsPage()
                 .clickOnAlertsButton()
@@ -67,7 +82,9 @@ public class AlertsTest extends UnauthorizedSelenideTest {
                 .sendPrompt(inputText)
                 .getText();
 
-        assertThat(outputText, Matchers.containsString("You entered " + inputText));
+        Allure.step("Проверить, что выходной текст содержит текст входного промпта",
+                () -> assertThat(outputText, Matchers.containsString("You entered " + inputText)));
+
     }
 
 

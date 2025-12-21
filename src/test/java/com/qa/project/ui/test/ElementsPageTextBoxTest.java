@@ -2,6 +2,8 @@ package com.qa.project.ui.test;
 
 import com.qa.project.ui.components.ElementsPageTextBoxComponent;
 import com.qa.project.ui.model.TextBoxData;
+import io.qameta.allure.*;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -10,6 +12,13 @@ import java.util.stream.Stream;
 import static com.qa.project.ui.pages.ElementsPage.openElementsPage;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Epic("Тестирование раздела Elements")
+@Feature("Text Box")
+@Owner("alexey")
+@Link(name = "Ссылка на раздел", url = "https://demoqa.com/text-box")
+@Severity(SeverityLevel.CRITICAL)
+@Tag("ui")
+@Tag("e2e")
 public class ElementsPageTextBoxTest extends UnauthorizedSelenideTest {
 
     private static Stream<TextBoxData> textBoxDataProvider() {
@@ -21,17 +30,30 @@ public class ElementsPageTextBoxTest extends UnauthorizedSelenideTest {
         );
     }
 
-    // @ParameterizedTest
+    @ParameterizedTest(name = "Данные: {0}")
     @MethodSource("textBoxDataProvider")
+    @Story("Заполнение формы Text Box")
+    @Description("Проверка корректного сохранения и отображения данных формы после отправки")
     void shouldSubmitFormAndReturnCorrectOutput(TextBoxData inputData) {
+        Allure.parameter("Full Name", inputData.getFullName());
+        Allure.parameter("Email", inputData.getEmail());
+        Allure.parameter("Current Address", inputData.getCurrentAddress());
+        Allure.parameter("Permanent Address", inputData.getPermanentAddress());
+
         final ElementsPageTextBoxComponent textBox = openElementsPage()
                 .clickOnTextBoxButton()
                 .fill(inputData)
                 .submit();
 
-        assertEquals(inputData.getFullName(), textBox.getOutputDivRawData().getFullName());
-        assertEquals(inputData.getEmail(), textBox.getOutputDivRawData().getEmail());
-        assertEquals(inputData.getCurrentAddress(), textBox.getOutputDivRawData().getCurrentAddress());
-        assertEquals(inputData.getPermanentAddress(), textBox.getOutputDivRawData().getPermanentAddress());
+        TextBoxData outputData = textBox.getOutputDivRawData();
+
+        assertEquals(inputData.getFullName(), outputData.getFullName(),
+                String.format("Full Name должно сохраниться как '%s'", inputData.getFullName()));
+        assertEquals(inputData.getEmail(), outputData.getEmail(),
+                String.format("Email должно сохраниться как '%s'", inputData.getEmail()));
+        assertEquals(inputData.getCurrentAddress(), outputData.getCurrentAddress(),
+                String.format("Current Address должно сохраниться как '%s'", inputData.getCurrentAddress()));
+        assertEquals(inputData.getPermanentAddress(), outputData.getPermanentAddress(),
+                String.format("Permanent Address должно сохраниться как '%s'", inputData.getPermanentAddress()));
     }
 }

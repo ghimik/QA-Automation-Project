@@ -2,8 +2,8 @@ package com.qa.project.ui.components;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,7 +15,6 @@ public class ElementsPageCheckBoxComponent {
     private final SelenideElement expandAllButton = $("button[title='Expand all']");
     private final SelenideElement collapseAllButton = $("button[title='Collapse all']");
     private final ElementsCollection resultSpan = $$(".text-success");
-
     private final ElementsCollection allCheckboxes = $$("input[type='checkbox']");
 
     private SelenideElement checkboxById(String id) {
@@ -26,21 +25,25 @@ public class ElementsPageCheckBoxComponent {
         return $x(String.format("//label[@for='tree-node-%s']/../button", label));
     }
 
+    @Step("Раскрыть все чекбоксы (Expand all)")
     public ElementsPageCheckBoxComponent expandAll() {
         expandAllButton.click();
         return this;
     }
 
+    @Step("Свернуть все чекбоксы (Collapse all)")
     public ElementsPageCheckBoxComponent collapseAll() {
         collapseAllButton.click();
         return this;
     }
 
+    @Step("Затогглить состояние узла '{label}'")
     public ElementsPageCheckBoxComponent toggleExpandByLabel(String label) {
         toggleExpandButtonByLabel(label).click();
         return this;
     }
 
+    @Step("Выбрать чекбоксы по ID: {checkboxIds}")
     public ElementsPageCheckBoxComponent select(String... checkboxIds) {
         for (String id : checkboxIds) {
             checkboxById(id).parent().click();
@@ -48,17 +51,20 @@ public class ElementsPageCheckBoxComponent {
         return this;
     }
 
+    @Step("Выбрать чекбокс по label: '{label}'")
     public ElementsPageCheckBoxComponent selectByLabel(String label) {
         $x(String.format("//label[@for='tree-node-%s']", label))
                 .click();
         return this;
     }
 
+    @Step("Снять выделение со всех чекбоксов")
     public ElementsPageCheckBoxComponent deselectAll() {
         allCheckboxes.filter(checked).forEach(checkbox -> checkbox.parent().click());
         return this;
     }
 
+    @Step("Проверить, что результат выбора отображается")
     public boolean isResultVisible() {
         return !resultSpan.isEmpty();
     }
@@ -68,12 +74,11 @@ public class ElementsPageCheckBoxComponent {
     }
 
     public List<String> getSelectedItemsFromResult() {
-
-
         final String resultText = getResultText();
         return List.of(resultText.split(" "));
     }
 
+    @Step("Проверить, выбран ли чекбокс с ID '{checkboxId}'")
     public boolean isSelected(String checkboxId) {
         return checkboxById(checkboxId).is(checked);
     }

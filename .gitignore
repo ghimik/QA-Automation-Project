@@ -34,3 +34,6 @@ target/
 
 src/test/resources/secret/
 src/test/resources/secret
+
+/.allure/*
+/allure-results/*

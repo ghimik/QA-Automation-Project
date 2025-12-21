@@ -3,7 +3,9 @@ package com.qa.project.ui.test;
 import com.qa.project.ui.components.PractiseFormComponent;
 import com.qa.project.ui.model.SubmissionModalData;
 import com.qa.project.ui.model.UserFormModel;
+import io.qameta.allure.*;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -11,16 +13,26 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.qa.project.ui.pages.FormsPage.openFormsPage;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Epic("Тестирование раздела Forms")
+@Feature("Practice Form")
+@Owner("alexey")
+@Link(name = "Ссылка на форму", url = "https://demoqa.com/automation-practice-form")
+@Severity(SeverityLevel.BLOCKER)
+@Tag("ui")
+@Tag("e2e")
 public class FormTest extends UnauthorizedSelenideTest{
 
 
-    // @Test
+    @Test
+    @Story("Полное заполнение формы")
+    @Description("Проверка, что все данные формы корректно сохраняются и отображаются в модальном окне после отправки")
     @SuppressWarnings("unchecked")
     public void testSubmittedFormEqualsResultForm() {
 

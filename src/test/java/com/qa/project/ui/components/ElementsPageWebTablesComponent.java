@@ -5,6 +5,7 @@ import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.qa.project.ui.model.EmployeeRecord;
+import io.qameta.allure.Step;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,7 @@ public class ElementsPageWebTablesComponent {
         return $x(String.format("(//span[@data-toggle='tooltip' and @title='Delete'])[%d]", rowIndex + 1));
     }
 
+    @Step("Получить все записи из таблицы")
     public List<EmployeeRecord> getAllRecords() {
         final List<EmployeeRecord> records = new ArrayList<>();
 
@@ -60,11 +62,13 @@ public class ElementsPageWebTablesComponent {
         return records;
     }
 
+    @Step("Найти записи по поисковому запросу: {searchTerm}")
     public List<EmployeeRecord> searchRecords(String searchTerm) {
         searchInput.setValue(searchTerm);
         return getAllRecords();
     }
 
+    @Step("Проверить, существует ли запись: {recordToFind}")
     public boolean recordExists(EmployeeRecord recordToFind) {
         return getAllRecords().stream()
                 .anyMatch(record ->
@@ -74,6 +78,7 @@ public class ElementsPageWebTablesComponent {
                 );
     }
 
+    @Step("Получить запись по индексу: {index}")
     public EmployeeRecord getRecordByIndex(int index) {
         final List<EmployeeRecord> records = getAllRecords();
         if (index < 0 || index >= records.size()) {
@@ -82,59 +87,66 @@ public class ElementsPageWebTablesComponent {
         return records.get(index);
     }
 
+    @Step("Удалить запись с индексом: {rowIndex}")
     public ElementsPageWebTablesComponent deleteRecord(int rowIndex) {
         getDeleteButton(rowIndex).click();
         return this;
     }
 
+    @Step("Редактировать запись с индексом: {rowIndex}")
     public ElementsPageWebTablesComponent editRecord(int rowIndex) {
         getEditButton(rowIndex).click();
         return this;
     }
 
+    @Step("Нажать кнопку Add (добавить новую запись)")
     public ElementsPageWebTablesComponent clickAdd() {
         addButton.click();
         return this;
     }
 
+    @Step("Проверить, что в таблице есть записи")
     public boolean hasRecords() {
         return !tableRows.isEmpty() &&
                 !firstNameCells.first().getText().trim().isEmpty();
     }
 
-
+    @Step("Получить количество записей в таблице")
     public int getRecordCount() {
         return (int) tableRows.asDynamicIterable().stream()
                 .filter(row -> !row.getText().trim().isEmpty())
                 .count();
     }
 
+    @Step("Очистить поле поиска")
     public ElementsPageWebTablesComponent clearSearch() {
         searchInput.clear();
         return this;
     }
 
+    @Step("Установить размер страницы: {size}")
     public ElementsPageWebTablesComponent setPageSize(String size) {
         pageSizeSelect.selectOption(size);
         return this;
     }
 
-
+    @Step("Перейти на страницу: {pageNumber}")
     public ElementsPageWebTablesComponent goToPage(int pageNumber) {
         pageInput.setValue(String.valueOf(pageNumber)).pressEnter();
         return this;
     }
 
-
+    @Step("Получить текущую страницу")
     public int getCurrentPage() {
         return Integer.parseInt(Objects.requireNonNull(pageInput.getValue()));
     }
 
-
+    @Step("Получить общее количество страниц")
     public int getTotalPages() {
         return Integer.parseInt(totalPages.getText());
     }
 
+    @Step("Перейти на следующую страницу")
     public ElementsPageWebTablesComponent nextPage() {
         if (!nextPageButton.is(disabled)) {
             nextPageButton.click();
@@ -142,6 +154,7 @@ public class ElementsPageWebTablesComponent {
         return this;
     }
 
+    @Step("Перейти на предыдущую страницу")
     public ElementsPageWebTablesComponent previousPage() {
         if (!previousPageButton.is(disabled)) {
             previousPageButton.click();
